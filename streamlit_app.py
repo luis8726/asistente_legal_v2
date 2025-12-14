@@ -64,6 +64,41 @@ with st.sidebar:
         st.write("OPENAI:", diag_openai())
         st.info("Copiá estos resultados y pegámelos si sigue fallando.")
 
+import socket, requests, os
+
+def net_diag_openai():
+    out = {}
+
+    # 1. DNS
+    try:
+        out["dns_api_openai_com"] = socket.getaddrinfo("api.openai.com", 443)[0][4][0]
+    except Exception as e:
+        out["dns_api_openai_com"] = f"DNS_FAIL: {repr(e)}"
+
+    # 2. HTTPS sin auth
+    try:
+        r = requests.get("https://api.openai.com/v1/models", timeout=20)
+        out["https_noauth_status"] = r.status_code
+        out["https_noauth_body"] = r.text[:120]
+    except Exception as e:
+        out["https_noauth_status"] = f"HTTPS_FAIL: {repr(e)}"
+
+    # 3. HTTPS con auth
+    try:
+        key = os.environ.get("OPENAI_API_KEY", "")
+        r = requests.get(
+            "https://api.openai.com/v1/models",
+            headers={"Authorization": f"Bearer {key}"},
+            timeout=20,
+        )
+        out["https_auth_status"] = r.status_code
+        out["https_auth_body"] = r.text[:120]
+    except Exception as e:
+        out["https_auth_status"] = f"HTTPS_AUTH_FAIL: {repr(e)}"
+
+    return out
+
+
 # =========================
 # CHAT
 # =========================
@@ -112,3 +147,4 @@ if prompt:
                 st.error("Fallo en ejecución (detalle abajo).")
                 st.exception(e)
                 st.session_state.messages.append({"role": "assistant", "content": f"ERROR: {repr(e)}"})
+
