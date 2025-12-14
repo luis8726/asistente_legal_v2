@@ -5,7 +5,10 @@ from openai import OpenAI
 DATABRICKS_HOST = "https://dbc-999eea35-2964.cloud.databricks.com"
 INDEX_FULL_NAME = "chalk_workspace.legales.kb_laws_chunks_vs_index_v3"
 
-OPENAI_API_KEY = os.environ["OPENAI_API_KEY"]
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "").strip()
+if not OPENAI_API_KEY:
+    raise RuntimeError("Falta OPENAI_API_KEY en variables de entorno")
+
 DATABRICKS_TOKEN = os.environ["DATABRICKS_TOKEN"]
 
 EMBEDDING_MODEL = "text-embedding-3-large"
@@ -184,4 +187,5 @@ CONTEXTO (fragmentos recuperados):
         ],
     )
     return resp.output_text
+
 
