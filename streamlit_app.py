@@ -85,7 +85,8 @@ def net_diag_openai():
 
     # 3. HTTPS con auth
     try:
-        key = os.environ.get("OPENAI_API_KEY", "")
+        #key = os.environ.get("OPENAI_API_KEY", "")
+        key = (os.environ.get("OPENAI_API_KEY", "")).strip()
         r = requests.get(
             "https://api.openai.com/v1/models",
             headers={"Authorization": f"Bearer {key}"},
@@ -155,5 +156,6 @@ if prompt:
                 st.error("Fallo en ejecución (detalle abajo).")
                 st.exception(e)
                 st.session_state.messages.append({"role": "assistant", "content": f"ERROR: {repr(e)}"})
+
 
 
