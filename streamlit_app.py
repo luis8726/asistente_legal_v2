@@ -98,6 +98,14 @@ def net_diag_openai():
 
     return out
 
+with st.sidebar:
+    st.divider()
+    st.subheader("Diagnóstico de red OpenAI")
+
+    if st.button("Probar conexión OpenAI"):
+        result = net_diag_openai()
+        st.write(result)
+        st.info("Copiá este resultado y pegámelo en el chat.")
 
 # =========================
 # CHAT
@@ -147,4 +155,5 @@ if prompt:
                 st.error("Fallo en ejecución (detalle abajo).")
                 st.exception(e)
                 st.session_state.messages.append({"role": "assistant", "content": f"ERROR: {repr(e)}"})
+
 
