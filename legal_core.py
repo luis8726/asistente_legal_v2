@@ -5,8 +5,8 @@ from openai import OpenAI
 DATABRICKS_HOST = "https://dbc-999eea35-2964.cloud.databricks.com"
 INDEX_FULL_NAME = "chalk_workspace.legales.kb_laws_chunks_vs_index_v3"
 
-DATABRICKS_TOKEN = "dapi0d5b02ab049fee26cc33e493d219a8f0" 
-OPENAI_API_KEY = "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"
+OPENAI_API_KEY = os.environ["OPENAI_API_KEY"]
+DATABRICKS_TOKEN = os.environ["DATABRICKS_TOKEN"]
 
 EMBEDDING_MODEL = "text-embedding-3-large"
 EMBEDDING_DIM = 3072
@@ -184,3 +184,4 @@ CONTEXTO (fragmentos recuperados):
         ],
     )
     return resp.output_text
+
