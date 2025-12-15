@@ -23,7 +23,7 @@ show_context = False         # ← antes checkbox
 # =====================================================
 # (DIAGNÓSTICOS – DESHABILITADOS / COMENTADOS)
 # =====================================================
-"""
+
 def diag_env():
     keys = ["OPENAI_API_KEY", "DATABRICKS_TOKEN", "LLM_MODEL", "PYTHON_VERSION"]
     out = {}
@@ -62,7 +62,7 @@ def diag_openai():
         "seconds": round(time.time() - t0, 2),
         "text": resp.output_text[:200],
     }
-"""
+
 # =====================================================
 # CHAT
 # =====================================================
@@ -120,3 +120,4 @@ if prompt:
                 st.session_state.messages.append(
                     {"role": "assistant", "content": f"ERROR: {repr(e)}"}
                 )
+
