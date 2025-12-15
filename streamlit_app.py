@@ -24,44 +24,6 @@ show_context = False         # ← antes checkbox
 # (DIAGNÓSTICOS – DESHABILITADOS / COMENTADOS)
 # =====================================================
 
-def diag_env():
-    keys = ["OPENAI_API_KEY", "DATABRICKS_TOKEN", "LLM_MODEL", "PYTHON_VERSION"]
-    out = {}
-    for k in keys:
-        v = os.environ.get(k)
-        out[k] = "OK" if v else "MISSING"
-    return out
-
-def diag_databricks():
-    host = os.environ.get("DATABRICKS_HOST", "https://dbc-999eea35-2964.cloud.databricks.com").rstrip("/")
-    token = os.environ.get("DATABRICKS_TOKEN", "")
-    index_name = os.environ.get("INDEX_FULL_NAME", "chalk_workspace.legales.kb_laws_chunks_vs_index_v3")
-
-    url = f"{host}/api/2.0/vector-search/indexes/{index_name}"
-    headers = {"Authorization": f"Bearer {token}"}
-
-    r = requests.get(url, headers=headers, timeout=30)
-    return {"status": r.status_code, "body": r.text[:1200], "url": url}
-
-def diag_openai():
-    from openai import OpenAI
-    import httpx
-
-    key = os.environ.get("OPENAI_API_KEY", "")
-    model = os.environ.get("LLM_MODEL", "gpt-5-mini")
-
-    client = OpenAI(api_key=key, timeout=httpx.Timeout(60.0, connect=20.0))
-    t0 = time.time()
-    resp = client.responses.create(
-        model=model,
-        input=[{"role": "user", "content": "decí OK"}],
-    )
-    return {
-        "ok": True,
-        "model": model,
-        "seconds": round(time.time() - t0, 2),
-        "text": resp.output_text[:200],
-    }
 
 # =====================================================
 # CHAT
@@ -120,4 +82,5 @@ if prompt:
                 st.session_state.messages.append(
                     {"role": "assistant", "content": f"ERROR: {repr(e)}"}
                 )
+
 
