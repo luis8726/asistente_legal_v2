@@ -13,7 +13,7 @@ DATABRICKS_TOKEN = os.environ["DATABRICKS_TOKEN"]
 
 EMBEDDING_MODEL = "text-embedding-3-large"
 EMBEDDING_DIM = 3072
-LLM_MODEL = os.environ.get("LLM_MODEL", "gpt-5")
+LLM_MODEL = os.environ.get("LLM_MODEL", "gpt-5.2")
 
 # columnas reales (NO incluyas score)
 COLUMNS = ["chunk_text", "doc_id", "article_number", "law_number", "subchunk_id"]
@@ -187,5 +187,6 @@ CONTEXTO (fragmentos recuperados):
         ],
     )
     return resp.output_text
+
 
 
