@@ -9,7 +9,9 @@ OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "").strip()
 if not OPENAI_API_KEY:
     raise RuntimeError("Falta OPENAI_API_KEY en variables de entorno")
 
-DATABRICKS_TOKEN = os.environ["DATABRICKS_TOKEN"]
+DATABRICKS_TOKEN = os.environ.get("DATABRICKS_TOKEN", "").strip()
+if not DATABRICKS_TOKEN:
+    raise RuntimeError("Falta DATABRICKS_TOKEN en variables de entorno")
 
 EMBEDDING_MODEL = "text-embedding-3-large"
 EMBEDDING_DIM = 3072
@@ -187,6 +189,7 @@ CONTEXTO (fragmentos recuperados):
         ],
     )
     return resp.output_text
+
 
 
 
