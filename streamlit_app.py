@@ -8,7 +8,7 @@ from legal_core import retrieve, build_context, generate_answer, rows_to_sources
 
 st.set_page_config(page_title="Asistente Legal", page_icon="⚖️", layout="centered")
 st.title("⚖️ Asistente Legal (Vector Search + OpenAI)")
-
+"""
 # =========================
 # DIAGNÓSTICO
 # =========================
@@ -107,7 +107,7 @@ with st.sidebar:
         result = net_diag_openai()
         st.write(result)
         st.info("Copiá este resultado y pegámelo en el chat.")
-
+"""
 # =========================
 # CHAT
 # =========================
@@ -156,6 +156,7 @@ if prompt:
                 st.error("Fallo en ejecución (detalle abajo).")
                 st.exception(e)
                 st.session_state.messages.append({"role": "assistant", "content": f"ERROR: {repr(e)}"})
+
 
 
 
